@@ -25,4 +25,4 @@ Deploy: Docker Compose
 
 docker-compose up -d
 
-`use endpoint /redoc in browser to see possible API endpoints and their params`
+`use endpoint /redoc in browser to see possible API endpoints and their params and for example Postman for testing`

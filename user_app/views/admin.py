@@ -10,7 +10,9 @@ from utils.database import user_collection
 router = APIRouter()
 
 
-@router.patch("/update-user/{user_id}", response_model=UserRead)
+@router.patch("/update-user/{user_id}",
+              summary="Update User | use Authorization:Bearer {access_token} from /token endpoint for auth in Postman",
+              response_model=UserRead)
 async def update_user(
     user_id: str, user: UserUpdateBase, authorize: AuthJWT = Depends(admin_required)
 ):

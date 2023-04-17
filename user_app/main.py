@@ -43,7 +43,8 @@ def email_duplicates_exception_handler(request: Request, exc: ServerSelectionTim
 
 @app.get("/")
 async def index():
-    return Response("USER API CRUD APP: use /redoc endpoint to see possible endpoints")
+    return Response("USER API CRUD APP: use /redoc endpoint to see possible endpoints "
+                    "and for example Postman for testing")
 
 
 from views.user import router as user_router

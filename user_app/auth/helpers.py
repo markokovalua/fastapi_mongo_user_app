@@ -6,14 +6,15 @@ from fastapi_jwt_auth import AuthJWT
 from fastapi import FastAPI, HTTPException, Depends, Request
 
 
-def generate_access_jwt_token(Authorize, inserted_id, email, hashed_pass):
+# Docs: https://indominusbyte.github.io/fastapi-jwt-auth/usage/basic/
+def generate_access_token(Authorize, inserted_id, email, hashed_pass):
     access_token = Authorize.create_access_token(
         subject=json.dumps(
             {"_id": inserted_id, "email": email, "hashed_pass": hashed_pass}
         ),
         expires_time=False,
     )
-    return {"access_token": access_token, "token_type": "jwt"}
+    return {"access_token": access_token, "token_type": "Bearer"}
 
 
 async def has_owner_permissions(Authorize, user_id):
@@ -37,7 +38,8 @@ async def has_admin_permissions(authorize):
     user = await user_collection.find_one(
         {"_id": ObjectId(current_jwt_user.get("_id"))}
     )
-    return user.get("role") == "admin" if user else False
+    return user.get("role") == "admin" and user.get("hashed_pass") == current_jwt_user.get("hashed_pass") \
+        if user else False
 
 
 async def admin_required(authorize: AuthJWT = Depends()):

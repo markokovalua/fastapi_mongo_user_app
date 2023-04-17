@@ -29,6 +29,7 @@ class UserAuth(BaseModel):
 
     @validator("email")
     def validate_email(cls, email):
+        # simple email validator just for example
         assert len(email) >= 8, "email length must be at least 12 characters"
         assert "@" in email, "@ character must be in email"
         return email
